@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
-import numpy as np
+import generate_graphs
+from generate_graphs import GenerateGraphs
 import openpyxl
 
 excel_document = openpyxl.load_workbook('Loutres.xlsx')
@@ -39,63 +39,10 @@ test = [
 
 print(test)
 
-# Histogram
-fig_hist, ax_hist = plt.subplots()
 
-num_bins = 8
-
-# the histogram of the data
-n, bins, patches = ax_hist.hist(test, num_bins, histtype='bar')
-
-# add a 'best fit' line
-# y = ((1 / (np.sqrt(2 * np.pi) * sigma)) *
-#      np.exp(-0.5 * (1 / sigma * (bins - mu))**2))
-# ax_hist.plot(bins, y, '--')
-ax_hist.set_xlabel('Weeks')
-ax_hist.set_ylabel('Km')
-ax_hist.set_title(r'Histogram of kilometers of mathieu')
-
-# Tweak spacing to prevent clipping of ylabel
-fig_hist.tight_layout()
-plt.show()
 
 # bar chart
-N = 8
+generator = GenerateGraphs('Mathieu', matthieu_values)
 
-width = 0.15  # the width of the bars
+generator.generate_bar_chart_km()
 
-ind = np.arange(N)  # the x locations for the groups
-
-fig, ax = plt.subplots()
-
-session1 = ax.bar(ind, matthieu_values[0], width, color='r')
-session2 = ax.bar(ind + width, matthieu_values[1], width, color='g')
-session3 = ax.bar(ind + 2 * width, matthieu_values[2], width, color='b')
-session4 = ax.bar(ind + 3 * width, matthieu_values[3], width, color='y')
-
-# add some text for labels, title and axes ticks
-ax.set_ylabel('km')
-ax.set_ylim([0, 20])
-ax.set_xlabel('Weeks')
-ax.set_title('km per week by session')
-ax.set_xticks(ind + width)
-ax.set_xticklabels(('week1', 'week2', 'week3', 'week4', 'week5', 'week6', 'week7', 'week8'))
-
-ax.legend((session1[0], session2[0], session3[0], session4[0]),
-          ('Session1', 'Session 2', 'Session 3', 'Session 4'))
-
-
-def autolabel(rects):
-    # attach some text labels
-    for rect in rects:
-        height = rect.get_height()
-        ax.text(rect.get_x() + rect.get_width() / 2., 1.05 * height, '%d' % int(height),
-                ha='center', va='bottom')
-
-
-autolabel(session1)
-autolabel(session2)
-autolabel(session3)
-autolabel(session4)
-
-plt.show()
