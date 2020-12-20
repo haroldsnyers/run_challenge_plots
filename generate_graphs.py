@@ -15,6 +15,10 @@ class GenerateGraphs:
         title = 'Km per week by session for ' + self.name
         self._generate_bar_chart('km', title, 'Weeks', 'Km')
 
+    def generate_bar_chart_minutes(self):
+        title = 'Km per week by session for ' + self.name
+        self._generate_bar_chart('minutes', title, 'Weeks', 'minutes')
+
     def _generate_histogram(self):
         pass
         # Histogram
